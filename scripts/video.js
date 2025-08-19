@@ -1,3 +1,13 @@
+function getTimeString(time){
+   let hour= parseInt(time /3600);
+   let reminingSecont=time % 3600;
+   let minute=parseInt(reminingSecont /60);
+   reminingSecont =reminingSecont % 60;
+   return `${hour} hour ${minute} minute ${reminingSecont} second ago`
+}
+
+
+
 const loadCatigers = () => {
     fetch('https://openapi.programming-hero.com/api/phero-tube/categories')
         .then(res => res.json())
@@ -26,10 +36,16 @@ const loadVideos = (videos) => {
      src=${video.thumbnail} 
      class='h-full w-full object-cover'
      alt="Shoes" />
+     ${
+        video.others.posted_date?.length ==0?
+         ""
+        :`
+        <span class='absolute right-2 bottom-2 text-white bg-black rounded p-1'>${getTimeString(video.others.posted_date)}</span>
+        `
+     }
+     
      </figure>
-     <span class='absolute'>
-     <img src="${video.others.poste.data}" alt="" />
-     </span>
+    
   <div class="px-0 py-2 flex gap-2">
       <div>
       <img  class='w-10 h-10 rounded-full object-cover' src="${video.authors[0].profile_picture} " alt="" />
@@ -39,12 +55,14 @@ const loadVideos = (videos) => {
       <div class='flex  items-center gap-2'>
   
       <p class='text-gray-400'>${video.authors[0].profile_name}</p> 
-         ${video.authors[0].verified == true ?
-             <img class='w-5' src="https://img.icons8.com/?size=96&id=D9RtvkuOe31p&format=png" alt="" />
-             :''
-         }
+       ${
+        video.authors[0].verified == true ? 
+        '<img class="w-5" src="https://img.icons8.com/?size=96&id=D9RtvkuOe31p&format=png" />'
+        :""
+
+       }
       </div>
-      <br />
+    
      
       <div>
       </div>
